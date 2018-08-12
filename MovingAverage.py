@@ -1,13 +1,25 @@
 class MovingAverage:
-    def EvenlySpaced(self, l, length):
+    def evenly_spaced(self, data: list, window):
 
-        new_len = len(l) - length + 1
+        new_len = len(data) - window + 1
         result = [0] * new_len
         for i in range(0, new_len):
-            for j in range(i, i + length):
-                result[i] = result[i] + l[j]
-            result[i] = result[i] / length
+            for j in range(i, i + window):
+                result[i] = result[i] + data[j]
+            result[i] = result[i] / window
         return result
 
-    def ArbitrarilySpaced(self, d, length):
-        return d
+    def arbitrarily_spaced(self, d: dict, window):
+
+        keys = list(d.keys())
+        mi = min(keys)
+        ma = max(keys)
+        filled_list = list()
+
+        for i in range(mi, ma+1):
+            if i in d:
+                current_key = i
+            current_element = d[current_key]
+            filled_list.append(current_element)
+
+        return self.evenly_spaced(filled_list, window)
