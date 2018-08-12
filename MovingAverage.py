@@ -22,4 +22,9 @@ class MovingAverage:
             current_element = d[current_key]
             filled_list.append(current_element)
 
-        return self.evenly_spaced(filled_list, window)
+        evenly_spaced = self.evenly_spaced(filled_list, window)
+        result = dict()
+        for key in d:
+            if key - window + 1 >= mi:
+                result[key] = evenly_spaced[key - mi - window + 1]
+        return result
