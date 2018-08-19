@@ -1,5 +1,6 @@
 from typing import NewType
 from abc import ABC, abstractmethod
+import urllib.parse
 
 Date = NewType('Date', float)
 
@@ -15,4 +16,10 @@ class QuoteFetcher(ABC):
 
 class InvestopediaQuoteFetcher(QuoteFetcher):
     def create_url(self, symbol: str, start: Date, end: Date):
-        pass
+        formatted_start_date = start.strftime("%b %d, %Y")
+        formatted_end_date = end.strftime("%b %d, %Y")
+        get_vars = {'Symbol': symbol, 'Type': 'Historical Prices', 'Timeframe': 'Daily',
+                    'StartDate': formatted_start_date, 'EndDate': formatted_end_date}
+
+        url = 'https://www.investopedia.com/markets/api/partial/historical/?'
+        return url + urllib.parse.urlencode(get_vars)
