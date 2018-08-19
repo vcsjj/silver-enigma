@@ -123,3 +123,11 @@ class TestMovingAverage(TestCase):
         filled_list = list()
         result = MovingAverage().create_complete_list(d, 3, filled_list, 0)
         self.assertListEqual([0, 5, 10], result)
+
+    def test_ema(self):
+        alpha = 0.5
+        s = [0, 10, 100]
+        result = MovingAverage().ema(s, alpha)
+        self.assertEqual(s[0], result[0])
+        self.assertEqual(s[1], result[1])
+        self.assertEqual(s[2], result[2] + 0.5 * result[1])

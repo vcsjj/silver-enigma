@@ -2,6 +2,9 @@ from typing import Any, Union
 
 
 class MovingAverage:
+    def ema(self, data: list, window):
+        return data
+
     def evenly_spaced(self, data: list, window):
 
         new_len = len(data) - window + 1
