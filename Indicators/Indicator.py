@@ -1,22 +1,14 @@
-from Interpolation import Interpolation
+from abc import ABC, abstractmethod
+
+from Utilities.Interpolation import Interpolation
 
 
-class MovingAverage:
-
+class Indicator(ABC):
     __interpolation = Interpolation()
 
-    def ema(self, data: list, alpha):
-        return data
-
+    @abstractmethod
     def evenly_spaced(self, data: list, window):
-
-        new_len = len(data) - window + 1
-        result = [0] * new_len
-        for i in range(0, new_len):
-            for j in range(i, i + window):
-                result[i] = result[i] + data[j]
-            result[i] = result[i] / window
-        return result
+        pass
 
     def arbitrarily_spaced(self, d: dict, window):
 
@@ -33,5 +25,3 @@ class MovingAverage:
             if key - window + 1 >= mi:
                 result[key] = evenly_spaced[key - mi - window + 1]
         return result
-
-

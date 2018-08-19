@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from Interpolation import Interpolation
+from Utilities.Interpolation import Interpolation
 
 
 class TestInterpolation(TestCase):

@@ -1,7 +1,7 @@
 from unittest import TestCase
 import dateutil.parser
 
-from QuoteFetcher import *
+from DataSources.QuoteFetcher import *
 
 
 # noinspection SpellCheckingInspection
