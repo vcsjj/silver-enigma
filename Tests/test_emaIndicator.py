@@ -4,7 +4,7 @@ from Indicators.EmaIndicator import EmaIndicator
 
 
 class TestEmaIndicator(TestCase):
-    def test_evenly_spaced(self):
+    def test_calculate_with_alpha(self):
         alpha = 0.5
         s = [0, 10, 100]
         result = EmaIndicator().calculate_with_alpha(s, alpha)
