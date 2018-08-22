@@ -8,9 +8,6 @@ from DataSources.QuoteFetcher import *
 # noinspection SpellCheckingInspection
 class TestQuoteFetcher(TestCase):
     html = """<div class="page">
-                
-        
-  
 <table class="data">
     <tbody data-rows="7" data-start-date="Nov 28, 2017">
     <tr class="header-row">
