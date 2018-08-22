@@ -71,7 +71,7 @@ class TestQuoteFetcher(TestCase):
         <td class="num">210.88</td>
         <td class="num">2,496,619</td>
             </tr>
-            </tbody>
+             </tbody>
 </table>
     </div>
 """
