@@ -10,7 +10,7 @@ Date = NewType('Date', float)
 
 class QuoteFetcher(ABC):
     def fetch(self, symbol: str, start: Date, end: Date):
-        fetchurl = self.create_url(symbol, start, end)
+        pass
 
     @abstractmethod
     def create_url(self, symbol: str, start: Date, end: Date):
