@@ -63,7 +63,7 @@ class TestQuoteFetcher(TestCase):
         <td class="num">192.57</td>
         <td class="num">7,980,992</td>
             </tr>
-                <tr class="in-the-money"> 
+            <tr class="in-the-money"> 
         <td class="date">Nov 28, 2017</td>
                 <td class="num">209.38</td>
         <td class="num">213.10</td>
