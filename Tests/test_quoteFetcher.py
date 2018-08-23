@@ -1,6 +1,8 @@
 import datetime
 from unittest import TestCase
+from unittest import mock
 import dateutil.parser
+from pytest_mock import MockFixture
 
 from DataSources.QuoteFetcher import *
 
@@ -106,3 +108,18 @@ class TestQuoteFetcher(TestCase):
         self.assertEqual('www.investopedia.com', urlparse.netloc)
         self.assertEqual('/markets/api/partial/historical/', urlparse.path)
 
+
+def test_fetches_supplied_url(mocker: MockFixture):
+    # arrange
+    page_content = 'some content'
+    reader = mock.Mock(**{'read.return_value': page_content})
+    mocker.patch('urllib.request.urlopen', **{'return_value': reader})
+
+    # act
+    url = 'https://www.investopedia.com/markets/api/partial/historical/?Symbol=MSFT&Type=Historical' \
+          '+Prices&Timeframe=Daily&StartDate=Nov+28%2C+2017&EndDate=Dec+05%2C+2017 '
+    html_content = InvestopediaQuoteFetcher().download(url)
+
+    # assert
+    urllib.request.urlopen.assert_called_once_with(url)
+    assert html_content == page_content

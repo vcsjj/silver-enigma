@@ -2,6 +2,7 @@ from typing import NewType
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 import urllib.parse
+import urllib.request
 
 from DataSources.Quote import Quote
 
@@ -15,6 +16,11 @@ class QuoteFetcher(ABC):
     @abstractmethod
     def create_url(self, symbol: str, start: Date, end: Date):
         pass
+
+    @staticmethod
+    def download(url):
+        f = urllib.request.urlopen(url)
+        return f.read()
 
 
 class InvestopediaQuoteFetcher(QuoteFetcher):
