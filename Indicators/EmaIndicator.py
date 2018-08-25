@@ -7,4 +7,10 @@ class EmaIndicator(Indicator):
         pass
 
     def calculate_with_alpha(self, data: list, alpha):
-        pass
+        filled_list = list()
+        for i in range(0, len(data)):
+            if i == 0:
+                filled_list.append(data[0])
+            else:
+                filled_list.append(alpha * data[i] + (1 - alpha) * filled_list[i - 1])
+        return filled_list
