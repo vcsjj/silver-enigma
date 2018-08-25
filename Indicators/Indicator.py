@@ -7,7 +7,7 @@ class Indicator(ABC):
     __interpolation = Interpolation()
 
     @abstractmethod
-    def evenly_spaced(self, data: list, window):
+    def evenly_spaced(self, data: list, window) -> list:
         pass
 
     def arbitrarily_spaced(self, d: dict, window):

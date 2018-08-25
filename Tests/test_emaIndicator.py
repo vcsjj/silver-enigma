@@ -1,13 +1,16 @@
-from unittest import TestCase
-
 from Indicators.EmaIndicator import EmaIndicator
+import pytest
 
 
-class TestEmaIndicator(TestCase):
-    def test_calculate_with_alpha(self):
-        alpha = 0.5
-        y = [0, 10, 100]
-        result = EmaIndicator().calculate_with_alpha(y, alpha)
-        self.assertEqual(y[0], result[0])
-        self.assertEqual(alpha * y[1] + (1 - alpha) * result[0], result[1])
-        self.assertEqual(alpha * y[2] + (1 - alpha) * result[1], result[2])
+def test_calculate_with_alpha():
+    alpha = 0.5
+    y = [0, 10, 100]
+    result = EmaIndicator().calculate_with_alpha(y, alpha)
+    assert y[0] == result[0]
+    assert alpha * y[1] + (1 - alpha) * result[0] == result[1]
+    assert alpha * y[2] + (1 - alpha) * result[1] == result[2]
+
+
+@pytest.mark.parametrize('n, alpha', [(1, 1), (10, 2.0 / 11.0)])
+def test_alpha_to_n_ratio(n, alpha):
+    assert EmaIndicator().alpha_from_window(n) == alpha

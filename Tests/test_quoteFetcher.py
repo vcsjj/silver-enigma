@@ -1,7 +1,6 @@
 import datetime
 from unittest import TestCase
 from unittest import mock
-import dateutil.parser
 from pytest_mock import MockFixture
 
 from DataSources.QuoteFetcher import *

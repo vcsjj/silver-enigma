@@ -50,3 +50,8 @@ class TestSmaIndicator(TestCase):
         expected = {5: (1 + (1 + 4) / 2 + 4 + (4 + 5) / 2 + 5) / 5}
         result = SmaIndicator().arbitrarily_spaced(d, 5)
         self.assertEqual(expected, result)
+
+    def test_twoConsecutiveMissingDates(self):
+        d = {736661: 83.97, 736662: 83.83, 736663: 83.44, 736664: 83.73, 736667: 83.35, 736668: 81.62}
+        SmaIndicator().arbitrarily_spaced(d, 5)
+
