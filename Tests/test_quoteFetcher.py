@@ -78,7 +78,7 @@ class TestQuoteFetcher(TestCase):
 """
 
     def test_tableItemsHaveCorrectValue(self):
-        quotes = InvestopediaQuoteFetcher().get_table_items(self.html)
+        quotes = InvestopediaQuoteFetcher().get_quotes(self.html)
         self.assertEqual('187.98', quotes[2].open)
 
     def test_fetchesRowsOfTable(self):
@@ -93,7 +93,7 @@ class TestQuoteFetcher(TestCase):
         # expected = 'https://www.investopedia.com/markets/api/partial/historical/?Symbol=MSFT&Type=Historical' \
         #               '+Prices&Timeframe=Daily&StartDate=Nov+28%2C+2017&EndDate=Dec+05%2C+2017 '
 
-        created = InvestopediaQuoteFetcher().create_url(symbol, start, end)
+        created = InvestopediaQuoteFetcher.create_url(symbol, start, end)
 
         urlparse = urllib.parse.urlparse(created)
         actual_query = urllib.parse.parse_qs(urlparse.query)
@@ -122,3 +122,8 @@ def test_fetches_supplied_url(mocker: MockFixture):
     # assert
     urllib.request.urlopen.assert_called_once_with(url)
     assert html_content == page_content
+
+
+def test_default_type():
+    qf = QuoteFetcher.default()
+    assert isinstance(qf, QuoteFetcher)

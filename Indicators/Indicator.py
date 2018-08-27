@@ -8,7 +8,7 @@ class Indicator(ABC):
 
     @abstractmethod
     def evenly_spaced(self, data: list, window) -> list:
-        pass
+        raise NotImplementedError
 
     def arbitrarily_spaced(self, d: dict, window):
 

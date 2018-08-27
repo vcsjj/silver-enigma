@@ -1,3 +1,9 @@
 [run]
 include = *
 omit = Tests/*, /usr/*, */.pyenv/*, */__init__.py, */site-packages/*
+branch = true
+
+[report]
+exclude_lines =
+    pragma: no cover
+    raise NotImplementedError
