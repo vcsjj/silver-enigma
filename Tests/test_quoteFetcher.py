@@ -5,10 +5,7 @@ from pytest_mock import MockFixture
 
 from DataSources.QuoteFetcher import *
 
-
-# noinspection SpellCheckingInspection
-class TestQuoteFetcher(TestCase):
-    html = """<div class="page">
+example_html = """<div class="page">
 <table class="data">
     <tbody data-rows="7" data-start-date="Nov 28, 2017">
     <tr class="header-row">
@@ -77,12 +74,16 @@ class TestQuoteFetcher(TestCase):
     </div>
 """
 
+
+# noinspection SpellCheckingInspection
+class TestQuoteFetcher(TestCase):
+
     def test_tableItemsHaveCorrectValue(self):
-        quotes = InvestopediaQuoteFetcher().get_quotes(self.html)
-        self.assertEqual('187.98', quotes[2].open)
+        quotes = InvestopediaQuoteFetcher().get_quotes(example_html)
+        self.assertEqual(187.98, quotes[2].open)
 
     def test_fetchesRowsOfTable(self):
-        rows = InvestopediaQuoteFetcher().get_table_rows(self.html)
+        rows = InvestopediaQuoteFetcher().get_table_rows(example_html)
         self.assertEqual(6, len(list(rows)))
 
     def test_InvestopediaUrl(self):
@@ -111,8 +112,7 @@ class TestQuoteFetcher(TestCase):
 def test_fetches_supplied_url(mocker: MockFixture):
     # arrange
     page_content = 'some content'
-    reader = mock.Mock(**{'read.return_value': page_content})
-    mocker.patch('urllib.request.urlopen', **{'return_value': reader})
+    patch_urllib_read_result(mocker, page_content)
 
     # act
     url = 'https://www.investopedia.com/markets/api/partial/historical/?Symbol=MSFT&Type=Historical' \
@@ -124,6 +124,27 @@ def test_fetches_supplied_url(mocker: MockFixture):
     assert html_content == page_content
 
 
+def test_fetch(mocker: MockFixture):
+    patch_urllib_read_result(mocker, example_html)
+
+    # we don't care for the date or symbol in this test:
+    result = QuoteFetcher.default().fetch("", datetime.date(1, 1, 1), datetime.date(1, 1, 1))
+
+    assert len(result) > 0
+    assert any(q.date == "Dec 05, 2017"
+               and q.open == 178.58
+               and q.close == 179.11
+               and q.high == 185.30
+               and q.low == 174.41
+               and q.volume == 5164761
+               for q in result)
+
+
 def test_default_type():
     qf = QuoteFetcher.default()
     assert isinstance(qf, QuoteFetcher)
+
+
+def patch_urllib_read_result(mocker, page_content: str):
+    reader = mock.Mock(**{'read.return_value': page_content})
+    mocker.patch('urllib.request.urlopen', **{'return_value': reader})

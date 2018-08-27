@@ -1,4 +1,4 @@
-from typing import NewType
+from typing import NewType, List
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -14,7 +14,7 @@ class QuoteFetcher(ABC):
     def default():
         return InvestopediaQuoteFetcher()
 
-    def fetch(self, symbol: str, start: Date, end: Date):
+    def fetch(self, symbol: str, start: Date, end: Date) -> List[Quote]:
         return self.get_quotes(self.download(self.create_url(symbol, start, end)))
 
     def get_quotes(self, data):
@@ -41,8 +41,8 @@ class InvestopediaQuoteFetcher(QuoteFetcher):
         return url + urllib.parse.urlencode(get_vars)
 
     def get_quotes(self, html: str):
-        rows = list(self.get_table_rows(html))
-        return [Quote(r[0], r[1], r[2], r[3], r[4]) for r in rows]
+        return [Quote(r[0], float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5].replace(',', ''))) for r in
+                list(self.get_table_rows(html))]
 
     def get_table_rows(self, html: str):
         bs = BeautifulSoup(html, 'html.parser')

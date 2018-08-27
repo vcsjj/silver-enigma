@@ -11,10 +11,12 @@ def readonly_property(name):
 @readonly_property('high')
 @readonly_property('low')
 @readonly_property('close')
+@readonly_property('volume')
 class Quote:
-    def __init__(self, date, open, high, low, close):
+    def __init__(self, date, open, high, low, close, volume):
         self._date = date
         self._open = open
         self._high = high
         self._low = low
         self._close = close
+        self._volume = volume
