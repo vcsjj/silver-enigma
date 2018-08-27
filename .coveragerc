@@ -1,7 +1,7 @@
 [run]
 include = *
 omit = Tests/*, /usr/*, */.pyenv/*, */__init__.py, */site-packages/*
-branch = false
+branch = True
 
 [report]
 exclude_lines =
