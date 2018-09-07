@@ -3,6 +3,8 @@ import pytest
 from Utilities.Trade import Trade
 from Utilities.Trades import Trades
 
+
+
 def test_buyOne_expenseIsOne():
     t = Trades()
     t.buy(Trade(0.0, 1, "S", 1.0))
@@ -36,9 +38,48 @@ def test_buyOneSellOne_expenseIsOne():
     assert 1.0 == t.expense(2)
 
 
-def test_buyOneSellOne_revenueIsOne():
+def test_buyOneSellOne_revenueIsminusOne():
     t = Trades()
     t.buy(Trade(0.0, 1, "S", 1.0))
     t.sell(Trade(1.0, -1, "S", 1.0))
 
-    assert 1.0 == t.expense(2)
+    assert -1.0 == t.revenue(2)
+
+
+def test_buyOnesellOne_sameDate():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "S", 1.0))
+    t.sell(Trade(0.0, -1, "S", 1.0))
+
+    assert 0.0 == t.expense(1) + t.revenue(1)
+
+
+def test_buyTwodifferent_expenseTwo():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "S", 1.0))
+    t.buy(Trade(0.0, 1, "D", 1.0))
+
+    assert 2.0 == t.expense(1)
+
+
+def test_expensebeforelastTrade():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "S", 1.0))
+    t.buy(Trade(1.0, 1, "S", 1.0))
+
+    assert 1.0 == t.expense(0.1)
+
+def test_sellTwodifferent_revenueminusTwo():
+    t = Trades()
+    t.sell(Trade(0.0, -1, "S", 1.0))
+    t.sell(Trade(0.0, -1, "D", 1.0))
+
+    assert -2.0 == t.revenue(1)
+
+
+def test_revenuebeforelastTrade():
+    t = Trades()
+    t.sell(Trade(0.0, -1, "S", 1.0))
+    t.sell(Trade(1.0, -1, "S", 1.0))
+
+    assert -1.0 == t.revenue(0.1)
