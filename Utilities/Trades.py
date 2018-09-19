@@ -20,3 +20,15 @@ class Trades(object):
 
     def revenue(self, date):
         return sum([x.amount * x.rate for x in self._tradelist if date >= x.date and x.amount < 0])
+
+#    def value_of_this_stock(self, symbol, date):
+#        return sum([x.amount * y.rate for x, y in self._tradelist if date >= x.date and symbol == x.symbol and date == y.date])
+#
+#    def value_of_stock(self, date):
+#        return sum([x.amount * y.rate for x, y in self._tradelist if date >= x.date and date == y.date])
+#
+#    def possible_profit_of_this_stock(self, date, symbol):
+#        return sum([(x.rate-y.rate)*y.amount for x, y in self._tradelist if date == x.date and date >= y.date and symbol == y.symbol])
+#
+#    def possible_profit_of_stock(self, date):
+#        return sum([(x.rate - y.rate) * y.amount for x, y in self._tradelist if date == x.date and date >= y.date])
