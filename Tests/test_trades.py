@@ -83,3 +83,23 @@ def test_revenuebeforelastTrade():
     t.sell(Trade(1.0, -1, "S", 1.0))
 
     assert -1.0 == t.revenue(0.1)
+
+def test_value_of_this_stock():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "x", 2.0))
+
+    assert t.value_of_this_stock(1.0, "x", 2.1) == 2.1
+
+def test_increasingrate_doublebuy():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "x", 1.0))
+    t.buy(Trade(1.0, 1, "x", 2.0))
+
+    assert t.value_of_this_stock(1.5, "x", 2.0) == 4.0
+
+def test_possible_profit_of_this_stock():
+    t = Trades()
+    t.buy(Trade(0.0, 1, "x", 1.0))
+    t.buy(Trade(1.0, 1, "x", 2.0))
+
+    assert t.possible_profit_of_this_stock(1.5, "x", 2.0) == 1.0
