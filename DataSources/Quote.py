@@ -6,6 +6,7 @@ def readonly_property(name):
     return ro_property_decorator
 
 
+@readonly_property('symbol')
 @readonly_property('date')
 @readonly_property('open')
 @readonly_property('high')
@@ -13,7 +14,8 @@ def readonly_property(name):
 @readonly_property('close')
 @readonly_property('volume')
 class Quote:
-    def __init__(self, date, open, high, low, close, volume):
+    def __init__(self, symbol, date, open, high, low, close, volume):
+        self._symbol = symbol
         self._date = date
         self._open = open
         self._high = high

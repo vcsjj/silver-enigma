@@ -41,7 +41,7 @@ class InvestopediaQuoteFetcher(QuoteFetcher):
         return url + urllib.parse.urlencode(get_vars)
 
     def get_quotes(self, html: str):
-        return [Quote(r[0], float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5].replace(',', ''))) for r in
+        return [Quote("", r[0], float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5].replace(',', ''))) for r in
                 list(self.get_table_rows(html))]
 
     def get_table_rows(self, html: str):
